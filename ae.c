@@ -12,34 +12,36 @@
 
 #endif
 
+/* 给server->loop 申请空间 */
 aeEventLoop *aeCreateEventLoop(int setsize) {
     aeEventLoop *eventLoop;
 
-    if ((eventLoop = zmalloc(sizeof(*eventLoop))) == NULL) {
+    if ((eventLoop = zmalloc(sizeof(*eventLoop))) == NULL) {  //给eventLoop申请空间
         goto err;
     }
 
-    eventLoop->events = zmalloc(sizeof(aeFileEvent) * setsize);
-    eventLoop->fired = zmalloc(sizeof(aeFiredEvent) * setsize);
-    if (eventLoop->events == NULL || eventLoop->fired == NULL) {
+    eventLoop->events = zmalloc(sizeof(aeFileEvent) * setsize);     //给event数组申请空间
+    eventLoop->fired = zmalloc(sizeof(aeFiredEvent) * setsize);     //给fired数组申请空间
+    if (eventLoop->events == NULL || eventLoop->fired == NULL) {    //申请成功
         goto err;
     }
 
-    eventLoop->setsize = setsize;
-    eventLoop->lastTime = time(NULL);
-    eventLoop->timeEventHead = NULL;
-    eventLoop->timeEventNextId = 0;
-    eventLoop->stop = 0;
-    eventLoop->maxfd = -1;
-    eventLoop->beforesleep = NULL;
+    eventLoop->setsize = setsize;       //设置大小
+    eventLoop->lastTime = time(NULL);   //设置lastTime=NULL
+    eventLoop->timeEventHead = NULL;    //定时事件链表置空
+    eventLoop->timeEventNextId = 0;     //定时事件的id为0
+    eventLoop->stop = 0;                //stop为0
+    eventLoop->maxfd = -1;              //最大文件描述符为-1
+    eventLoop->beforesleep = NULL;      //beforesleep设置为NULL
 
-    if (aeApiCreate(eventLoop) == -1) {
+    if (aeApiCreate(eventLoop) == -1) { 
+        //给epoll申请空间，创建一个epoll实例，保存到aeEventLoop中
         goto err;
     }
 
     /* Events with mask == AE_NONE are not set. So let's initialize the vector with it. */
     for (int i = 0; i < setsize; i++) {
-        eventLoop->events[i].mask = AE_NONE;
+        eventLoop->events[i].mask = AE_NONE; //将每一个fd的事件类型初始化为 AE_NONE 
     }
 
     return eventLoop;
@@ -107,24 +109,26 @@ int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask, aeFileProc *proc
         errno = ERANGE;
         return AE_ERR;
     }
-    aeFileEvent *fe = &eventLoop->events[fd];
 
-    if (aeApiAddEvent(eventLoop, fd, mask) == -1) {
+    aeFileEvent *fe = &eventLoop->events[fd]; //利用fe指向eventLoop->events[fd]
+
+    if (aeApiAddEvent(eventLoop, fd, mask) == -1) { 
+        //往epoll添加事件，本质调用epoll_ctl(epfd,EPOLL_CTL_ADD,fd,...)
         return AE_ERR;
     }
 
-    fe->mask |= mask;
+    fe->mask |= mask; //如果fe->mask之前不是空，现在就相当于同时监控两个事件
     if (mask & AE_READABLE) {
-        fe->rfileProc = proc;
+        fe->rfileProc = proc;  //proc是读操作的处理函数
     }
 
     if (mask & AE_WRITABLE) {
-        fe->wfileProc = proc;
+        fe->wfileProc = proc;  //proc是写操作的处理函数
     }
 
-    fe->clientData = clientData;
+    fe->clientData = clientData; //让它们指向同一个client或server实例
     if (fd > eventLoop->maxfd) {
-        eventLoop->maxfd = fd;
+        eventLoop->maxfd = fd;   //如果新的fd大于maxfd,则更新maxfd
     }
 
     return AE_OK;
@@ -339,44 +343,81 @@ static int processTimeEvents(aeEventLoop *eventLoop) {
  * the events that's possible to process without to wait are processed.
  *
  * The function returns the number of events processed. */
+
+/* Redis服务器在没有被事件触发时，就会阻塞等待，因为没有设置AE_DONT_WAIT标识
+ * 但是它不会一直死等待，等待文件事件的到来，因为它还要处理时间事件
+ * so 在调用aeApiPoll进行监听之前，先从时间事件链表中获取一个最近到达的时间事件
+ * 根据要等待的事件构建一个struct timeval tv,*tvp结构的变量，
+ * 这个变量作为epoll_wait第四个参数，保存着服务器阻塞等待文件事件的最长时间，
+ * 一旦时间到达而没触发文件事件 * aeApiPoll函数就会停止阻塞，立即返回
+ * 接着调用processTimeEvents处理时间事件
+ * 如果阻塞等待的最长时间(也就是最近的时间事件到来)之间，触发了文件事件，
+ * 就会先执行文件事件，后执行时间事件，因此处理定时事件通常比预设的晚一些*/
+
+
+/* 函数返回处理的事件个数
+ * flags==0  表示函数神码都不做，直接返回
+ * 如果flags 设置了 AE_DONT_WAIT，那么函数处理完事件后直接返回，不阻塞等待
+ * 如果flags 设置了 AE_FILE_EVENTS，则执行文件事件
+ * 如果flags 设置了 AE_TIME_EVENTS，则执行定时事件
+ * 如果flags 设置了 AE_ALL_EVENTS，则执行所有类型的事件
+ * 在这设置的是 AE_ALL_EVENTS ,没有设置 AE_DONT_WAIT */
+
 int aeProcessEvents(aeEventLoop *eventLoop, int flags) {
     int processed = 0, numevents;
 
+
     /* Nothing to do? return ASAP */
     if (!(flags & AE_TIME_EVENTS) && !(flags & AE_FILE_EVENTS)) {
+        //如果什么事件都没有设置则直接返回
         return 0;
     }
 
     /* Note that we want call select() even if there are no
      * file events to process as long as we want to process time
      * events, in order to sleep until the next time event is ready
-     * to fire. */
+     * to fire. 
+     * 注意，我们即使没有文件事件，因为我们要处理时间事件，
+     * 我们仍然要调用select(),以便在下一次事件准备启动之前进行休眠
+     * */
     if (eventLoop->maxfd != -1 || ((flags & AE_TIME_EVENTS) && !(flags & AE_DONT_WAIT))) {
+        //如果有定时事件处理
         aeTimeEvent *shortest = NULL;
         struct timeval tv, *tvp;
 
+        //如果设置了定时事件，而没有设置不阻塞标识
         if (flags & AE_TIME_EVENTS && !(flags & AE_DONT_WAIT)) {
+            //for循环找到最近需要发生的定时事件
             shortest = aeSearchNearestTimer(eventLoop);
         }
 
+        //如果定时事件链表不空，获取到最早到的时间事件
         if (shortest) {
             long now_sec, now_ms;
+            //获取当前时间
             aeGetTime(&now_sec, &now_ms);
             tvp = &tv;
-
+ 
             /* How many milliseconds we need to wait for the next time event to fire? */
+            //计算我们需要等待的ms数，直到最近的定时事件发生
             long long ms = (shortest->when_sec - now_sec) * 1000 + shortest->when_ms - now_ms;
 
             if (ms > 0) {
+                //如果定时事件没有过期，计算出需要等待的时间，
+                //作为epoll_wait的第四个参数
                 tvp->tv_sec = ms / 1000;
                 tvp->tv_usec = (ms % 1000) * 1000;
             } else {
+                //否则置为0,epoll_wait就不会阻塞
                 tvp->tv_sec = 0;
                 tvp->tv_usec = 0;
             }
-        } else {
+        } else {  
             /* If we have to check for events but need to return
              * ASAP because of AE_DONT_WAIT we need to set the timeout to zero */
+            /* 此时定时事件链表为空，如果我们设置了不阻塞标识，那么将tv置为0
+             * 那么就不阻塞，epoll_wait直接返回
+             * 否则就一直等文件事件到来*/
             if (flags & AE_DONT_WAIT) {
                 tv.tv_sec = tv.tv_usec = 0;
                 tvp = &tv;
@@ -385,9 +426,9 @@ int aeProcessEvents(aeEventLoop *eventLoop, int flags) {
                 tvp = NULL; /* wait forever */
             }
         }
-
+        //调用epoll_wait函数，返回就绪文件事件个数
         numevents = aeApiPoll(eventLoop, tvp);
-        for (int i = 0; i < numevents; i++) {
+        for (int i = 0; i < numevents; i++) {  //遍历依次处理loop->fired
             aeFileEvent *fe = &eventLoop->events[eventLoop->fired[i].fd];
             int mask = eventLoop->fired[i].mask;
             int fd = eventLoop->fired[i].fd;
@@ -396,19 +437,23 @@ int aeProcessEvents(aeEventLoop *eventLoop, int flags) {
             /* note the fe->mask & mask & ... code: maybe an already processed
              * event removed an element that fired and we still didn't
              * processed, so we check if the event is still valid. */
+            //如果文件是可读事件发生
             if (fe->mask & mask & AE_READABLE) {
-                rfired = 1;
-                fe->rfileProc(eventLoop, fd, fe->clientData, mask);
+                rfired = 1;      //确保读或写只执行一个，此处设置读事件标识
+                fe->rfileProc(eventLoop, fd, fe->clientData, mask); 
+                //执行读处理
             }
+            //可写事件发生
             if (fe->mask & mask & AE_WRITABLE) {
                 if (!rfired || fe->wfileProc != fe->rfileProc) {
                     fe->wfileProc(eventLoop, fd, fe->clientData, mask);
                 }
             }
-            processed++;
+            processed++;  //执行事件的次数加1
         }
     }
     /* Check time events */
+    //执行时间事件
     if (flags & AE_TIME_EVENTS) {
         processed += processTimeEvents(eventLoop);
     }
@@ -451,13 +496,17 @@ int aeWait(int fd, int mask, long long milliseconds) {
     return retval;
 }
 
+//事件轮询的主函数
 void aeMain(aeEventLoop *eventLoop) {
     eventLoop->stop = 0;
-    while (!eventLoop->stop) {
+    //一直处理事件 事件驱动的典型特征就是死循环
+    while (!eventLoop->stop) {  
         if (eventLoop->beforesleep) {
             eventLoop->beforesleep(eventLoop);
         }
+        //处理到时的定时事件和就绪的文件事件
         aeProcessEvents(eventLoop, AE_ALL_EVENTS);
+        //AE_ALL_EVENTS定义在ae.h中，代表文件事件和时间事件
     }
 }
 

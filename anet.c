@@ -517,6 +517,7 @@ static int anetGenericAccept(char *err, int s, struct sockaddr *sa, socklen_t *l
     return fd;
 }
 
+//接受连接，返回 cfd
 int anetTcpAccept(char *err, int s, char *ip, socklen_t ip_len, int *port) {
     int fd;
     struct sockaddr_storage sa;

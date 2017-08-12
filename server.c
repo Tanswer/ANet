@@ -82,6 +82,8 @@ static void writeEventHandler(aeEventLoop *loop, int fd, void *data, int mask)
     }
 }
 
+
+//处理可读事件
 static void readEventHandler(aeEventLoop *loop, int fd, void *data, int mask)
 {
     client_t *client = (client_t *)data;
@@ -136,6 +138,7 @@ static void readEventHandler(aeEventLoop *loop, int fd, void *data, int mask)
     }
 }
 
+//处理连接事件
 static void acceptTcpHandler(aeEventLoop *loop, int fd, void *data, int mask)
 {
     char cip[64];
@@ -143,6 +146,7 @@ static void acceptTcpHandler(aeEventLoop *loop, int fd, void *data, int mask)
 
     server_t *server = (server_t *)data;
 
+    //接受连接
     int cfd = anetTcpAccept(NULL, fd, cip, sizeof(cip), &cport);
     if (cfd != -1) {
         printf("accepted ip %s:%d\n", cip, cport);
@@ -159,6 +163,7 @@ static void acceptTcpHandler(aeEventLoop *loop, int fd, void *data, int mask)
         client->fd = cfd;
 
         if (aeCreateFileEvent(loop, cfd, AE_READABLE, readEventHandler, client) == AE_ERR) {
+            //继续调用aeCreateEvent给新连接的fd注册可读事件。并且注册函数readEventHander
             if (errno == ERANGE) {
                 // or use aeResizeSetSize(server->loop, cfd) modify this limit
                 printf("so many client, close new.");
@@ -173,14 +178,17 @@ static void acceptTcpHandler(aeEventLoop *loop, int fd, void *data, int mask)
 void init_server(server_t *server)
 {
     server->loop = aeCreateEventLoop(server->max_client_count);
-
+    /* 为loop中各类数据结构申请空间 */
     //aeCreateTimeEvent(loop, 1000, serverCron, NULL, NULL);
 
     server->listen_fd = anetTcpServer(server->err_info, server->port, NULL, server->backlog);
+    /* 创建lfd,实际上调用socket相关的函数 */
+
     if (server->listen_fd != ANET_ERR) {
-        anetNonBlock(server->err_info, server->listen_fd);
+        anetNonBlock(server->err_info, server->listen_fd);  /* 设置非阻塞 */
     }
 
+    /* 将lfd 注册到 epoll 的实例上，事件处理函数为 acceptTcpHandler */
     if (aeCreateFileEvent(server->loop, server->listen_fd, AE_READABLE, acceptTcpHandler, server) != AE_ERR) {
         char conn_info[64];
         anetFormatSock(server->listen_fd, conn_info, sizeof(conn_info));
@@ -190,8 +198,8 @@ void init_server(server_t *server)
 
 void wait_server(server_t *server)
 {
-    aeMain(server->loop);
-    aeDeleteEventLoop(server->loop);
+    aeMain(server->loop);   /* while 循环，不断循环处理 */
+    aeDeleteEventLoop(server->loop);    /* 如果跳出循环，就删除loop */
 }
 
 int main()

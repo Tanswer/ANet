@@ -1,0 +1,214 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AE_ALL_EVENTS	ae.h	15;"	d
+AE_DELETED_EVENT_ID	ae.h	19;"	d
+AE_DONT_WAIT	ae.h	16;"	d
+AE_ERR	ae.h	7;"	d
+AE_FILE_EVENTS	ae.h	13;"	d
+AE_NOMORE	ae.h	18;"	d
+AE_NONE	ae.h	9;"	d
+AE_NOTUSED	ae.h	22;"	d
+AE_OK	ae.h	6;"	d
+AE_READABLE	ae.h	10;"	d
+AE_TIME_EVENTS	ae.h	14;"	d
+AE_WRITABLE	ae.h	11;"	d
+ANET_AEBUFFER_H	buffer.h	2;"	d
+ANET_AE_H	ae.h	2;"	d
+ANET_ANET_H	anet.h	2;"	d
+ANET_CONNECT_BE_BINDING	anet.c	229;"	d	file:
+ANET_CONNECT_NONBLOCK	anet.c	228;"	d	file:
+ANET_CONNECT_NONE	anet.c	227;"	d	file:
+ANET_DEFINE_H	define.h	2;"	d
+ANET_ERR	anet.h	8;"	d
+ANET_ERR_LEN	anet.h	9;"	d
+ANET_IP_ONLY	anet.h	13;"	d
+ANET_NONE	anet.h	12;"	d
+ANET_OK	anet.h	7;"	d
+ANET_PROTOCOL_H	protocol.h	2;"	d
+ANET_SERVER_H	server.h	2;"	d
+CHAT_MESSAGE	protocol.h	13;"	d
+DEFAULT_BUFF_SIZE	define.h	10;"	d
+DEFAULT_LISTEN_BACKLOG	define.h	24;"	d
+DEFAULT_LISTEN_PORT	define.h	26;"	d
+DEFAULT_MAX_CLIENT_COUNT	define.h	25;"	d
+MAGIC_NUMBER	protocol.h	9;"	d
+QUERY_NAME	protocol.h	12;"	d
+_ALL_SOURCE	fmacros.h	41;"	d
+_BSD_SOURCE	fmacros.h	33;"	d
+_DEFAULT_SOURCE	fmacros.h	37;"	d
+_FILE_OFFSET_BITS	fmacros.h	59;"	d
+_GNU_SOURCE	fmacros.h	36;"	d
+_LARGEFILE_SOURCE	fmacros.h	58;"	d
+_POSIX_C_SOURCE	fmacros.h	55;"	d
+_REDIS_FMACRO_H	fmacros.h	31;"	d
+_XOPEN_SOURCE	fmacros.h	45;"	d
+_XOPEN_SOURCE	fmacros.h	51;"	d
+_anetTcpServer	anet.c	/^static int _anetTcpServer(char *err, int port, char *bindaddr, int af, int backlog) {$/;"	f	file:
+_rfds	ae_select.c	/^    fd_set _rfds, _wfds;$/;"	m	struct:aeApiState	file:
+_wfds	ae_select.c	/^    fd_set _rfds, _wfds;$/;"	m	struct:aeApiState	file:
+acceptTcpHandler	server.c	/^static void acceptTcpHandler(aeEventLoop *loop, int fd, void *data, int mask)$/;"	f	file:
+aeAddMillisecondsToNow	ae.c	/^static void aeAddMillisecondsToNow(long long milliseconds, long *sec, long *ms) {$/;"	f	file:
+aeApiAddEvent	ae_epoll.c	/^static int aeApiAddEvent(aeEventLoop *eventLoop, int fd, int mask) {$/;"	f	file:
+aeApiAddEvent	ae_select.c	/^static int aeApiAddEvent(aeEventLoop *eventLoop, int fd, int mask) {$/;"	f	file:
+aeApiCreate	ae_epoll.c	/^static int aeApiCreate(aeEventLoop *eventLoop) {$/;"	f	file:
+aeApiCreate	ae_select.c	/^static int aeApiCreate(aeEventLoop *eventLoop) {$/;"	f	file:
+aeApiDelEvent	ae_epoll.c	/^static void aeApiDelEvent(aeEventLoop *eventLoop, int fd, int delmask) {$/;"	f	file:
+aeApiDelEvent	ae_select.c	/^static void aeApiDelEvent(aeEventLoop *eventLoop, int fd, int mask) {$/;"	f	file:
+aeApiFree	ae_epoll.c	/^static void aeApiFree(aeEventLoop *eventLoop) {$/;"	f	file:
+aeApiFree	ae_select.c	/^static void aeApiFree(aeEventLoop *eventLoop) {$/;"	f	file:
+aeApiName	ae_epoll.c	/^static char *aeApiName(void) {$/;"	f	file:
+aeApiName	ae_select.c	/^static char *aeApiName(void) {$/;"	f	file:
+aeApiPoll	ae_epoll.c	/^static int aeApiPoll(aeEventLoop *eventLoop, struct timeval *tvp) {$/;"	f	file:
+aeApiPoll	ae_select.c	/^static int aeApiPoll(aeEventLoop *eventLoop, struct timeval *tvp) {$/;"	f	file:
+aeApiResize	ae_epoll.c	/^static int aeApiResize(aeEventLoop *eventLoop, int setsize) {$/;"	f	file:
+aeApiResize	ae_select.c	/^static int aeApiResize(aeEventLoop *eventLoop, int setsize) {$/;"	f	file:
+aeApiState	ae_epoll.c	/^typedef struct aeApiState {$/;"	s	file:
+aeApiState	ae_epoll.c	/^} aeApiState;$/;"	t	typeref:struct:aeApiState	file:
+aeApiState	ae_select.c	/^typedef struct aeApiState {$/;"	s	file:
+aeApiState	ae_select.c	/^} aeApiState;$/;"	t	typeref:struct:aeApiState	file:
+aeBeforeSleepProc	ae.h	/^typedef void aeBeforeSleepProc(struct aeEventLoop *eventLoop);$/;"	t
+aeCreateEventLoop	ae.c	/^aeEventLoop *aeCreateEventLoop(int setsize) {$/;"	f
+aeCreateFileEvent	ae.c	/^int aeCreateFileEvent(aeEventLoop *eventLoop, int fd, int mask, aeFileProc *proc, void *clientData) {$/;"	f
+aeCreateTimeEvent	ae.c	/^long long aeCreateTimeEvent(aeEventLoop *eventLoop, long long milliseconds,$/;"	f
+aeDeleteEventLoop	ae.c	/^void aeDeleteEventLoop(aeEventLoop *eventLoop) {$/;"	f
+aeDeleteFileEvent	ae.c	/^void aeDeleteFileEvent(aeEventLoop *eventLoop, int fd, int mask) {$/;"	f
+aeDeleteTimeEvent	ae.c	/^int aeDeleteTimeEvent(aeEventLoop *eventLoop, long long id) {$/;"	f
+aeEventFinalizerProc	ae.h	/^typedef void aeEventFinalizerProc(struct aeEventLoop *eventLoop, void *clientData);$/;"	t
+aeEventLoop	ae.h	/^typedef struct aeEventLoop {$/;"	s
+aeEventLoop	ae.h	/^} aeEventLoop;$/;"	t	typeref:struct:aeEventLoop
+aeFileEvent	ae.h	/^typedef struct aeFileEvent {$/;"	s
+aeFileEvent	ae.h	/^} aeFileEvent;$/;"	t	typeref:struct:aeFileEvent
+aeFileProc	ae.h	/^typedef void aeFileProc(struct aeEventLoop *eventLoop, int fd, void *clientData, int mask);$/;"	t
+aeFiredEvent	ae.h	/^typedef struct aeFiredEvent {$/;"	s
+aeFiredEvent	ae.h	/^} aeFiredEvent;$/;"	t	typeref:struct:aeFiredEvent
+aeGetApiName	ae.c	/^char *aeGetApiName(void) {$/;"	f
+aeGetFileEvents	ae.c	/^int aeGetFileEvents(aeEventLoop *eventLoop, int fd) {$/;"	f
+aeGetSetSize	ae.c	/^int aeGetSetSize(aeEventLoop *eventLoop) {$/;"	f
+aeGetTime	ae.c	/^static void aeGetTime(long *seconds, long *milliseconds) {$/;"	f	file:
+aeMain	ae.c	/^void aeMain(aeEventLoop *eventLoop) {$/;"	f
+aeProcessEvents	ae.c	/^int aeProcessEvents(aeEventLoop *eventLoop, int flags) {$/;"	f
+aeResizeSetSize	ae.c	/^int aeResizeSetSize(aeEventLoop *eventLoop, int setsize) {$/;"	f
+aeSearchNearestTimer	ae.c	/^static aeTimeEvent *aeSearchNearestTimer(aeEventLoop *eventLoop) {$/;"	f	file:
+aeSetBeforeSleepProc	ae.c	/^void aeSetBeforeSleepProc(aeEventLoop *eventLoop, aeBeforeSleepProc *beforesleep) {$/;"	f
+aeStop	ae.c	/^void aeStop(aeEventLoop *eventLoop) {$/;"	f
+aeTimeEvent	ae.h	/^typedef struct aeTimeEvent {$/;"	s
+aeTimeEvent	ae.h	/^} aeTimeEvent;$/;"	t	typeref:struct:aeTimeEvent
+aeTimeProc	ae.h	/^typedef int aeTimeProc(struct aeEventLoop *eventLoop, long long id, void *clientData);$/;"	t
+aeWait	ae.c	/^int aeWait(int fd, int mask, long long milliseconds) {$/;"	f
+alloc_buffer	buffer.c	/^buffer_t *alloc_buffer()$/;"	f
+alloc_client	server.c	/^client_t *alloc_client()$/;"	f
+alloc_packet	protocol.c	/^package_t *alloc_packet(uint32_t data_len)$/;"	f
+anetBlock	anet.c	/^int anetBlock(char *err, int fd) {$/;"	f
+anetCreateSocket	anet.c	/^static int anetCreateSocket(char *err, int domain) {$/;"	f	file:
+anetDisableTcpNoDelay	anet.c	/^int anetDisableTcpNoDelay(char *err, int fd) {$/;"	f
+anetEnableTcpNoDelay	anet.c	/^int anetEnableTcpNoDelay(char *err, int fd) {$/;"	f
+anetFormatAddr	anet.c	/^static int anetFormatAddr(char *buf, size_t buf_len, char *ip, int port) {$/;"	f	file:
+anetFormatPeer	anet.c	/^int anetFormatPeer(int fd, char *buf, size_t buf_len) {$/;"	f
+anetFormatSock	anet.c	/^int anetFormatSock(int fd, char *buff, size_t buff_len) {$/;"	f
+anetGenericAccept	anet.c	/^static int anetGenericAccept(char *err, int s, struct sockaddr *sa, socklen_t *len) {$/;"	f	file:
+anetGenericResolve	anet.c	/^static int anetGenericResolve(char *err, char *host, char *ipbuf, socklen_t ipbuf_len, int flags) {$/;"	f	file:
+anetKeepAlive	anet.c	/^int anetKeepAlive(char *err, int fd, int interval) {$/;"	f
+anetListen	anet.c	/^static int anetListen(char *err, int s, struct sockaddr *sa, socklen_t len, int backlog) {$/;"	f	file:
+anetNonBlock	anet.c	/^int anetNonBlock(char *err, int fd) {$/;"	f
+anetPeerToString	anet.c	/^static int anetPeerToString(int fd, char *ip, socklen_t ip_len, int *port) {$/;"	f	file:
+anetRead	anet.c	/^int anetRead(int fd, char *buf, int count) {$/;"	f
+anetResolve	anet.c	/^int anetResolve(char *err, char *host, char *ipbuf, socklen_t ipbuf_len) {$/;"	f
+anetResolveIP	anet.c	/^int anetResolveIP(char *err, char *host, char *ipbuf, socklen_t ipbuf_len) {$/;"	f
+anetSendTimeout	anet.c	/^int anetSendTimeout(char *err, int fd, long long ms) {$/;"	f
+anetSetBlock	anet.c	/^static int anetSetBlock(char *err, int fd, int non_block) {$/;"	f	file:
+anetSetError	anet.c	/^static void anetSetError(char *err, const char *fmt, ...) {$/;"	f	file:
+anetSetReuseAddr	anet.c	/^static int anetSetReuseAddr(char *err, int fd) {$/;"	f	file:
+anetSetSendBuffer	anet.c	/^int anetSetSendBuffer(char *err, int fd, int buffsize) {$/;"	f
+anetSetTcpNoDelay	anet.c	/^static int anetSetTcpNoDelay(char *err, int fd, int val) {$/;"	f	file:
+anetSockName	anet.c	/^static int anetSockName(int fd, char *ip, socklen_t ip_len, int *port) {$/;"	f	file:
+anetTcp6Server	anet.c	/^int anetTcp6Server(char *err, int port, char *bindaddr, int backlog) {$/;"	f
+anetTcpAccept	anet.c	/^int anetTcpAccept(char *err, int s, char *ip, socklen_t ip_len, int *port) {$/;"	f
+anetTcpConnect	anet.c	/^int anetTcpConnect(char *err, char *addr, int port) {$/;"	f
+anetTcpGenericConnect	anet.c	/^static int anetTcpGenericConnect(char *err, char *addr, int port, char *source_addr, int flags) {$/;"	f	file:
+anetTcpKeepAlive	anet.c	/^int anetTcpKeepAlive(char *err, int fd) {$/;"	f
+anetTcpNonBlockBestEffortBindConnect	anet.c	/^int anetTcpNonBlockBestEffortBindConnect(char *err, char *addr, int port, char *source_addr) {$/;"	f
+anetTcpNonBlockBindConnect	anet.c	/^int anetTcpNonBlockBindConnect(char *err, char *addr, int port, char *source_addr) {$/;"	f
+anetTcpNonBlockConnect	anet.c	/^int anetTcpNonBlockConnect(char *err, char *addr, int port) {$/;"	f
+anetTcpServer	anet.c	/^int anetTcpServer(char *err, int port, char *bindaddr, int backlog) {$/;"	f
+anetUnixAccept	anet.c	/^int anetUnixAccept(char *err, int s) {$/;"	f
+anetUnixConnect	anet.c	/^int anetUnixConnect(char *err, char *path) {$/;"	f
+anetUnixGenericConnect	anet.c	/^static int anetUnixGenericConnect(char *err, char *path, int flags) {$/;"	f	file:
+anetUnixNonBlockConnect	anet.c	/^int anetUnixNonBlockConnect(char *err, char *path) {$/;"	f
+anetUnixServer	anet.c	/^int anetUnixServer(char *err, char *path, mode_t perm, int backlog) {$/;"	f
+anetV6Only	anet.c	/^static int anetV6Only(char *err, int s) {$/;"	f	file:
+anetWrite	anet.c	/^int anetWrite(int fd, char *buf, int count) {$/;"	f
+apidata	ae.h	/^    void *apidata;              \/* 特定接口的特定数据 *\/$/;"	m	struct:aeEventLoop
+backlog	server.h	/^    int backlog;                \/\/listen第二个参数backlog的大小$/;"	m	struct:__anon4
+beforesleep	ae.h	/^    aeBeforeSleepProc *beforesleep;     \/* 在sleep之前执行的程序 *\/$/;"	m	struct:aeEventLoop
+buff	buffer.h	/^    unsigned char *buff;$/;"	m	struct:__anon1
+buffer_t	buffer.h	/^} buffer_t;$/;"	t	typeref:struct:__anon1
+check_buffer_size	buffer.c	/^void check_buffer_size(buffer_t *buffer, size_t avlid_size)$/;"	f
+clientData	ae.h	/^    void *clientData;       \/* 用于传递server和client实例给响应函数 *\/$/;"	m	struct:aeFileEvent
+clientData	ae.h	/^    void *clientData;   \/* 用于传递server和client实例给相应函数*\/$/;"	m	struct:aeTimeEvent
+client_t	server.h	/^} client_t;$/;"	t	typeref:struct:__anon5
+data	protocol.h	/^    unsigned char data[0];$/;"	m	struct:__anon3
+do_package	protocol.c	/^void do_package(package_t *req_package, package_t **resp_package)$/;"	f
+epfd	ae_epoll.c	/^    int epfd;$/;"	m	struct:aeApiState	file:
+err_info	server.h	/^    char err_info[ANET_ERR_LEN];\/\/error信息$/;"	m	struct:__anon4
+events	ae.h	/^    aeFileEvent *events;        \/* 注册事件数组 *\/$/;"	m	struct:aeEventLoop
+events	ae_epoll.c	/^    struct epoll_event *events;$/;"	m	struct:aeApiState	typeref:struct:aeApiState::epoll_event	file:
+fd	ae.h	/^    int fd;     \/* fd *\/$/;"	m	struct:aeFiredEvent
+fd	server.h	/^    int fd;$/;"	m	struct:__anon5
+finalizerProc	ae.h	/^    aeEventFinalizerProc *finalizerProc; \/* *\/$/;"	m	struct:aeTimeEvent
+fired	ae.h	/^    aeFiredEvent *fired;        \/* 发生事件数组 *\/$/;"	m	struct:aeEventLoop
+free_buffer	buffer.c	/^void free_buffer(buffer_t *buffer)$/;"	f
+free_client	server.c	/^void free_client(client_t *client)$/;"	f
+free_package	protocol.c	/^void free_package(package_t *package)$/;"	f
+get_readable_size	buffer.c	/^size_t get_readable_size(buffer_t *buffer)$/;"	f
+get_writeable_size	buffer.c	/^size_t get_writeable_size(buffer_t *buffer)$/;"	f
+head	protocol.h	/^    package_head_t head;$/;"	m	struct:__anon3
+id	ae.h	/^    long long id;       \/* time event identifier. 定时事件ID*\/$/;"	m	struct:aeTimeEvent
+init_server	server.c	/^void init_server(server_t *server)$/;"	f
+lastTime	ae.h	/^    time_t lastTime;            \/* 最近一次处理定时事件的时间 *\/$/;"	m	struct:aeEventLoop
+length	protocol.h	/^    uint32_t length;$/;"	m	struct:__anon2
+listen_fd	server.h	/^    int listen_fd;              \/\/监听fd$/;"	m	struct:__anon4
+loop	server.h	/^    aeEventLoop *loop;          \/\/事件循环$/;"	m	struct:__anon4
+loop	server.h	/^    aeEventLoop *loop;$/;"	m	struct:__anon5
+magic	protocol.h	/^    uint32_t magic;$/;"	m	struct:__anon2
+main	server.c	/^int main()$/;"	f
+main	server_test.c	/^int main()$/;"	f
+mask	ae.h	/^    int mask;       \/* one of AE_(READABLE|WRITABLE) 事件码：可读\/可写 *\/$/;"	m	struct:aeFileEvent
+mask	ae.h	/^    int mask;   \/* 发生事件的掩码:读\/写 *\/$/;"	m	struct:aeFiredEvent
+max_client_count	server.h	/^    int max_client_count;       \/\/最大的客户端连接数$/;"	m	struct:__anon4
+maxfd	ae.h	/^    int maxfd;                  \/* 当前注册的最大文件描述符 *\/$/;"	m	struct:aeEventLoop
+next	ae.h	/^    struct aeTimeEvent *next; \/* 下一个节点 *\/$/;"	m	struct:aeTimeEvent	typeref:struct:aeTimeEvent::aeTimeEvent
+package_encode	protocol.c	/^int package_encode(buffer_t *buffer, package_t *package)$/;"	f
+package_head_t	protocol.h	/^} __attribute__((packed)) package_head_t;$/;"	t	typeref:struct:__anon2
+package_t	protocol.h	/^} __attribute__((packed)) package_t;$/;"	t	typeref:struct:__anon3
+packet_decode	protocol.c	/^int packet_decode(buffer_t *buffer, package_t **package)$/;"	f
+port	server.h	/^    int port;                   \/\/监听的端口$/;"	m	struct:__anon4
+processTimeEvents	ae.c	/^static int processTimeEvents(aeEventLoop *eventLoop) {$/;"	f	file:
+readEventHandler	server.c	/^static void readEventHandler(aeEventLoop *loop, int fd, void *data, int mask)$/;"	f	file:
+read_buffer	server.h	/^    buffer_t *read_buffer;$/;"	m	struct:__anon5
+read_idx	buffer.h	/^    size_t read_idx;$/;"	m	struct:__anon1
+rfds	ae_select.c	/^    fd_set rfds, wfds;$/;"	m	struct:aeApiState	file:
+rfileProc	ae.h	/^    aeFileProc *rfileProc;  \/* 读事件的处理函数 *\/$/;"	m	struct:aeFileEvent
+serverCron	server.c	/^static int serverCron(struct aeEventLoop *loop, long long id, void *data)$/;"	f	file:
+server_t	server.h	/^} server_t;$/;"	t	typeref:struct:__anon4
+setsize	ae.h	/^    int setsize;                \/* 监控的最大文件描述符数 *\/$/;"	m	struct:aeEventLoop
+size	buffer.h	/^    size_t size;$/;"	m	struct:__anon1
+stop	ae.h	/^    int stop;                   \/* 是否停止循环 *\/$/;"	m	struct:aeEventLoop
+timeEventHead	ae.h	/^    aeTimeEvent *timeEventHead; \/* 定时事件链表 *\/$/;"	m	struct:aeEventLoop
+timeEventNextId	ae.h	/^    long long timeEventNextId;  \/* 定时事件ID *\/$/;"	m	struct:aeEventLoop
+timeProc	ae.h	/^    aeTimeProc *timeProc;   \/* 定时事件处理程序 *\/$/;"	m	struct:aeTimeEvent
+type	protocol.h	/^    uint32_t type;$/;"	m	struct:__anon2
+wait_server	server.c	/^void wait_server(server_t *server)$/;"	f
+wfds	ae_select.c	/^    fd_set rfds, wfds;$/;"	m	struct:aeApiState	file:
+wfileProc	ae.h	/^    aeFileProc *wfileProc;  \/* 写事件的处理函数 *\/$/;"	m	struct:aeFileEvent
+when_ms	ae.h	/^    long when_ms;       \/* milliseconds 毫秒*\/$/;"	m	struct:aeTimeEvent
+when_sec	ae.h	/^    long when_sec;      \/* seconds 秒*\/$/;"	m	struct:aeTimeEvent
+writeEventHandler	server.c	/^static void writeEventHandler(aeEventLoop *loop, int fd, void *data, int mask)$/;"	f	file:
+write_buffer	server.h	/^    buffer_t *write_buffer;$/;"	m	struct:__anon5
+write_idx	buffer.h	/^    size_t write_idx;$/;"	m	struct:__anon1
+zfree	define.h	7;"	d
+zmalloc	define.h	6;"	d
+zrealloc	define.h	8;"	d
